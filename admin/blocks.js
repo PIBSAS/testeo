@@ -1,6 +1,5 @@
-const container = document.createElement("div");
-container.id = "blocksContainer";
-document.body.insertBefore(container, document.getElementById("preview"));
+const container = document.getElementById("blocksContainer");
+const preview = document.getElementById("preview");
 
 let blocks = [];
 
@@ -19,36 +18,40 @@ export function agregarBloqueTexto(contenido = "<p>Nuevo bloque</p>") {
 
   blocks.push(block);
 
-  hacerBloquesArrastrables();
+  activarDragAndDrop();
   actualizarPreview();
 }
 
 // Drag & drop
-function hacerBloquesArrastrables() {
-  let dragE = null;
+function activarDragAndDrop() {
+  let arrastrando = null;
 
   container.querySelectorAll(".block").forEach(block => {
-    block.addEventListener("dragstart", e => {
-      dragE = block;
+    block.addEventListener("dragstart", () => {
+      arrastrando = block;
       block.style.opacity = "0.4";
     });
+
     block.addEventListener("dragend", () => {
-      dragE.style.opacity = "1";
-      dragE = null;
+      arrastrando.style.opacity = "1";
+      arrastrando = null;
+      actualizarPreview();
     });
+
     block.addEventListener("dragover", e => {
       e.preventDefault();
       const rect = block.getBoundingClientRect();
       const mitad = rect.top + rect.height / 2;
+
       if (e.clientY < mitad) {
-        container.insertBefore(dragE, block);
+        container.insertBefore(arrastrando, block);
       } else {
-        container.insertBefore(dragE, block.nextSibling);
+        container.insertBefore(arrastrando, block.nextSibling);
       }
-      actualizarPreview();
     });
   });
 }
+
 
 export function obtenerHTMLFinal() {
   let html = "";
@@ -60,10 +63,6 @@ export function obtenerHTMLFinal() {
 
 // Renderiza todo en la vista previa
 function actualizarPreview() {
-  const preview = document.getElementById("preview");
   preview.innerHTML = obtenerHTMLFinal();
   if (window.MathJax) MathJax.typesetPromise([preview]);
 }
-
-// Agregar un bloque inicial
-agregarBloqueTexto("<h2>Inicio del capítulo</h2>");
