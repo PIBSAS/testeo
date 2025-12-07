@@ -4,7 +4,7 @@ document.body.insertBefore(container, document.getElementById("preview"));
 
 let blocks = [];
 
-function agregarBloqueTexto(contenido = "<p>Nuevo bloque</p>") {
+export function agregarBloqueTexto(contenido = "<p>Nuevo bloque</p>") {
   const block = document.createElement("div");
   block.className = "block";
   block.draggable = true;
