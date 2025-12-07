@@ -3,44 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Editor con Vista Previa</title>
-
-<!-- MathJax -->
+<link rel="stylesheet" href="blocks.css">
 <script id="MathJax-script"
   async
   src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
 </script>
-
-<style>
-  body { display: flex; gap: 20px; padding: 20px; }
-  textarea {
-    width: 45%;
-    height: 90vh;
-    font-family: monospace;
-    font-size: 16px;
-  }
-  #preview {
-    width: 50%;
-    height: 90vh;
-    border: 1px solid #aaa;
-    padding: 15px;
-    overflow-y: auto;
-    background: #fff;
-  }
-</style>
-
 </head>
+  
 <body>
 
-<textarea id="editor">
-<h2>Ejemplo</h2>
-<p>Esto es una ecuación inline: \( a^2 + b^2 = c^2 \)</p>
-<p>Y esto es display:</p>
-$$ \int_0^1 x^2 \, dx = \frac{1}{3} $$
-</textarea>
+<div style="width:45%;">
+  <button onclick="agregarBloqueTexto()">Agregar bloque de texto</button>
+
+  <!-- Los bloques se insertan aquí dinámicamente -->
+  <div id="blocksContainer"></div>
+</div>
 
 <div id="preview"></div>
+  
+<script type="module" src="preview.js"></script>
+<script type="module">
+  import { agregarBloqueTexto, obtenerHTMLFinal } from "./blocks.js";
 
-<script src="preview.js" type="module"></script>
+  // Exponer funciones para debug
+  window.exportar = () => console.log(obtenerHTMLFinal());
+</script>
+
 
 </body>
 </html>
