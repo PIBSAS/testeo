@@ -25,7 +25,7 @@
 <script type="module">
   import { agregarBloqueTexto, obtenerHTMLFinal } from "./blocks.js";
 
-  // Exponer funciones para debug
+  window.agregarBloqueTexto = agregarBloqueTexto;
   window.exportar = () => console.log(obtenerHTMLFinal());
 </script>
 
